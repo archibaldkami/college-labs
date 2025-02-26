@@ -145,10 +145,6 @@ void interface(int len, string methods[]) {
         cout << endl;
         
     } else cout << "incorrect method number\n";
-
-
-
-    
 }
 
 int main() {

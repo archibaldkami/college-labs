@@ -154,6 +154,5 @@ void interface(int len, string methods[]) {
 int main() {
     string methods[] = {"Sort Select", "Sort Paste", "Sort Bubble"};
     interface((sizeof(methods)/sizeof(*methods)), methods);
-    // makelist();
     return 0;
 }

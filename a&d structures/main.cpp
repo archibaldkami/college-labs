@@ -53,7 +53,7 @@ vector<int> makelist() {
     system("clear");
     cout << "\t----\tA2E\t----\n";
     cout << "\nChoose list create method from list below:\n\n";
-    cout << "1. Input manually\n2. Generate random\n";
+    cout << "1. Generate random\n2. Input manually\n";
     cout << "\nMethod to use (default: 1) : "; getline(cin, sub_select[0]);
 
     if (sub_select[0].empty()) sub_select[0] = "1";
@@ -69,13 +69,13 @@ vector<int> makelist() {
 
     vector<int> list_(isub_select);
     if (sub_select[0] == "1") {
+        for (int i = 0; i < isub_select; i++) {
+            list_[i] = rand() % 101;
+        }
+    } else if (sub_select[0] == "2")
         for (int i = 0; i < isub_select ;i++) {
             cout << "Input number at index " << i << ": "; 
             cin >> list_[i];
-        }
-    } else if (sub_select[0] == "2")
-        for (int i = 0; i < isub_select; i++) {
-            list_[i] = rand() % 101;
         }
     return list_;
 }

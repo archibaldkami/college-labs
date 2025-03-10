@@ -5,7 +5,6 @@
 using namespace std;
 using namespace std::chrono;
 
-// Lab 1
 vector<int> Sort_Select(vector<int> input_list) {
     for (int j = input_list.size() - 1; j >= 0; j--) {
         int max = input_list[j];
@@ -22,7 +21,6 @@ vector<int> Sort_Select(vector<int> input_list) {
     return input_list;
 }
 
-// Lab 2
 vector<int> Sort_Paste(vector<int> input_list) {
     for (int j = 1; j < input_list.size(); j++) {
         int el = 0;
@@ -37,7 +35,6 @@ vector<int> Sort_Paste(vector<int> input_list) {
     return input_list;
 }
 
-// Lab 3
 vector<int> Sort_Bubble(vector<int> input_list) {
     for (int j = 0; j < input_list.size(); j++) {
         for (int i = 0; i < input_list.size() - 1; i++)
@@ -46,9 +43,50 @@ vector<int> Sort_Bubble(vector<int> input_list) {
             input_list[i+1] = input_list[i];
             input_list[i] = tmp;
             }
-        // for (int i = 0; i < input_list.size(); i++) cout << " " << input_list[i];
-        // cout << endl;
     }
+    return input_list;
+}
+
+vector<int> Sort_Merge(vector<int> input_list) {
+    int mid = input_list.size() / 2;
+    if (input_list.size() % 2 == 1)
+    mid++;
+    int h = 1;
+    int *c = new int[input_list.size()];
+    int step;
+    while (h < input_list.size()) {
+        step = h;
+        int i = 0;
+        int j = mid;
+        int k = 0;
+        while (step <= mid) {
+            while ((i < step) && (j < input_list.size())) {
+                if (j < (mid + step) && (input_list[i] > input_list[j])) {
+                    c[k] = input_list[j];
+                    j++;
+                } else {
+                    c[k] = input_list[i];
+                    i++;
+                }
+                k++;
+            }
+            while (i < step) {
+                c[k] = input_list[i];
+                i++;
+                k++;
+                }
+            while (j < (mid + step) && j < input_list.size()) {
+                c[k] = input_list[j];
+                j++;
+                k++;
+            }
+            step = step + h;
+        }
+        for (i = 0; i < input_list.size(); i++)
+            input_list[i] = c[i];
+        h = h * 2;
+    }
+    delete[] c;
     return input_list;
 }
 
@@ -125,6 +163,7 @@ int interface(int len, string methods[]) {
         if (option[1] == '1') sort_function = Sort_Select;
         else if (option[1] == '2') sort_function = Sort_Paste;
         else if (option[1] == '3') sort_function = Sort_Bubble;
+        else if (option[1] == '4') sort_function = Sort_Merge;
         else {
             cout << "incorrect method number\n";
             return 0;
@@ -146,7 +185,7 @@ int interface(int len, string methods[]) {
         }
 
         cout << "\nBAD count: " << err << "/" << iter << endl; 
-        cout << ((err > 0) ? ( (err < 100) ? "Some is \033[1;33mNOT OK\033[0m" : "All is \033[1;31mBAD\033[0m" ) : "All is \033[1;32mOK\033[0m") << endl;
+        cout << ((err > 0) ? ( (err < iter) ? "Some is \033[1;33mNOT OK\033[0m" : "All is \033[1;31mBAD\033[0m" ) : "All is \033[1;32mOK\033[0m") << endl;
 
         auto stop = high_resolution_clock::now();
         float duration = duration_cast<microseconds>(stop - start).count();
@@ -170,6 +209,10 @@ int interface(int len, string methods[]) {
             cout << "\nSort Bubble\n";
             sort_function = Sort_Bubble;
 
+        } else if (option[0] == '4') {
+            cout << "\nSort Merge\n";
+            sort_function = Sort_Merge;
+
         } else {
             cout << "incorrect method number\n";
             return 0;
@@ -186,7 +229,7 @@ int interface(int len, string methods[]) {
 }
 
 int main() {
-    string methods[] = {"Sort Select", "Sort Paste", "Sort Bubble"};
+    string methods[] = {"Sort Select", "Sort Paste", "Sort Bubble", "Sort Merge"};
     interface((sizeof(methods)/sizeof(*methods)), methods);
     return 0;
 }

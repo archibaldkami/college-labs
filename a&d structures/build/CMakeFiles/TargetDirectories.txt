@@ -1,0 +1,5 @@
+/home/archibald/Documents/git/college-labs/a&d structures/build/CMakeFiles/app.dir
+/home/archibald/Documents/git/college-labs/a&d structures/build/CMakeFiles/edit_cache.dir
+/home/archibald/Documents/git/college-labs/a&d structures/build/CMakeFiles/rebuild_cache.dir
+/home/archibald/Documents/git/college-labs/a&d structures/build/CMakeFiles/app_autogen_timestamp_deps.dir
+/home/archibald/Documents/git/college-labs/a&d structures/build/CMakeFiles/app_autogen.dir

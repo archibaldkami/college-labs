@@ -28,7 +28,7 @@ CMAKE_BUILD_TYPE:STRING=
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CXX compiler
-CMAKE_CXX_COMPILER:STRING=/usr/bin/c++
+CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -315,15 +315,6 @@ Qt6Widgets_DIR:PATH=/usr/lib/cmake/Qt6Widgets
 
 //The directory containing a CMake configuration file for Qt6.
 Qt6_DIR:PATH=/usr/lib/cmake/Qt6
-
-//Value Computed by CMake
-SimpleQtApp_BINARY_DIR:STATIC=/home/archibald/Documents/git/college-labs/a&d structures/build
-
-//Value Computed by CMake
-SimpleQtApp_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-SimpleQtApp_SOURCE_DIR:STATIC=/home/archibald/Documents/git/college-labs/a&d structures
 
 //Path to a program.
 Vulkan_GLSLANG_VALIDATOR_EXECUTABLE:FILEPATH=/bin/glslangValidator

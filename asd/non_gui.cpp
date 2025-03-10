@@ -91,6 +91,42 @@ vector<int> Sort_Merge(vector<int> input_list) {
     return input_list;
 }
 
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pivotIndex = partition(arr, low, high);
+        quickSort(arr, low, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, high);
+    }
+}
+
+vector<int> QuickSort(vector<int> input_list) {
+    int list_[input_list.size()];
+    for (int i = 0; i < input_list.size(); i++) {
+        list_[i] = input_list[i];
+    }
+
+    quickSort(list_, 0, input_list.size()-1);
+    
+    for (int i = 0; i < input_list.size(); i++) {
+        input_list[i] = list_[i];
+    }
+
+    return input_list;
+}
+
 int Sorted_Test(vector<int> input_list) {
     for (int i = 0; i < input_list.size() - 1; i++) {
         if ( ! (input_list[i] <= input_list[i+1]) ) return 0;
@@ -213,6 +249,10 @@ int interface(int len, string methods[]) {
         } else if (option[0] == '4') {
             cout << "\nSort Merge\n";
             sort_function = Sort_Merge;
+        
+        } else if (option[0] == '5') {
+            cout << "\nQuickSort\n";
+            sort_function = QuickSort;
 
         } else {
             cout << "incorrect method number\n";
@@ -230,7 +270,7 @@ int interface(int len, string methods[]) {
 }
 
 int main() {
-    string methods[] = {"Sort Select", "Sort Paste", "Sort Bubble", "Sort Merge"};
+    string methods[] = {"Sort Select", "Sort Paste", "Sort Bubble", "Sort Merge", "QuickSort"};
     interface((sizeof(methods)/sizeof(*methods)), methods);
     return 0;
 }

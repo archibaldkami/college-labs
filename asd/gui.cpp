@@ -133,7 +133,7 @@ vector<int> QuickSort(vector<int> input_list) {
         list_[i] = input_list[i];
     }
 
-    quickSort(list_, 0, input_list.size());
+    quickSort(list_, 0, input_list.size()-1);
     
     for (int i = 0; i < input_list.size(); i++) {
         input_list[i] = list_[i];
@@ -143,7 +143,7 @@ vector<int> QuickSort(vector<int> input_list) {
 }
 
 int Sorted_Test(vector<int> input_list) {
-    for (int i = 0; i < input_list.size() - 1; i++) {
+    for (int i = 0; i < input_list.size(); i++) {
         if (!(input_list[i] <= input_list[i+1])) return 0;
     }
     return 1;

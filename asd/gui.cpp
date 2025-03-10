@@ -62,7 +62,87 @@ vector<int> Sort_Bubble(vector<int> input_list) {
     return input_list;
 }
 
-int Sorted_Test(std::vector<int> input_list) {
+vector<int> Sort_Merge(vector<int> input_list) {
+    int mid = input_list.size() / 2;
+    if (input_list.size() % 2 == 1)
+        mid++;
+    int h = 1;
+    int *c = new int[input_list.size()];
+    int step;
+    
+    while (h < input_list.size()) {
+        step = h;
+        int i = 0;
+        int j = mid;
+        int k = 0;
+        while (step <= mid) {
+            while ((i < step) && (j < input_list.size())) {
+                if (j < (mid + step) && (input_list[i] > input_list[j])) {
+                    c[k] = input_list[j];
+                    j++;
+                } else {
+                    c[k] = input_list[i];
+                    i++;
+                }
+                k++;
+            }
+            while (i < step) {
+                c[k] = input_list[i];
+                i++;
+                k++;
+            }
+            while (j < (mid + step) && j < input_list.size()) {
+                c[k] = input_list[j];
+                j++;
+                k++;
+            }
+            step = step + h;
+        }
+        for (i = 0; i < input_list.size(); i++)
+        input_list[i] = c[i];
+        h = h * 2;
+    }
+    delete[] c;
+    return input_list;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pivotIndex = partition(arr, low, high);
+        quickSort(arr, low, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, high);
+    }
+}
+
+vector<int> QuickSort(vector<int> input_list) {
+    int list_[input_list.size()];
+    for (int i = 0; i < input_list.size(); i++) {
+        list_[i] = input_list[i];
+    }
+
+    quickSort(list_, 0, input_list.size());
+    
+    for (int i = 0; i < input_list.size(); i++) {
+        input_list[i] = list_[i];
+    }
+
+    return input_list;
+}
+
+int Sorted_Test(vector<int> input_list) {
     for (int i = 0; i < input_list.size() - 1; i++) {
         if (!(input_list[i] <= input_list[i+1])) return 0;
     }
@@ -84,20 +164,22 @@ private:
     QTabWidget* tabWidget;
     QTableWidget* testResultsTable;
 
-    const QString sortMethodNames[3] = {
-        "Вибіркове сортування", 
+    const QString sortMethodNames[5] = {
+        "Сортування вибором", 
         "Сортування вставкою", 
-        "Бульбашкове сортування"
+        "Сортування бульбашкою",
+        "Сортування злиттям",
+        "Швидке сортування"
     };
 
-    std::vector<int> generateList() {
+    vector<int> generateList() {
         int listSize = listSizeLineEdit->text().toInt();
-        std::vector<int> list(listSize);
+        vector<int> list(listSize);
         
         if (listGenerationMethodComboBox->currentIndex() == 0) {
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> distrib(0, 100);
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_int_distribution<> distrib(0, 100);
             
             for (int i = 0; i < listSize; i++) {
                 list[i] = distrib(gen);
@@ -126,7 +208,7 @@ private slots:
     void onGenerateList() {
         if (listGenerationMethodComboBox->currentIndex() == 0) {
             int listSize = listSizeLineEdit->text().toInt();
-            std::vector<int> list = generateList();
+            vector<int> list = generateList();
             
             QString listText;
             for (int num : list) {
@@ -137,7 +219,7 @@ private slots:
     }
 
     void onSortList() {
-        std::vector<int> list;
+        vector<int> list;
         QString inputText = inputListTextEdit->toPlainText();
         QStringList numberStrings = inputText.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
         
@@ -145,11 +227,13 @@ private slots:
             list.push_back(numStr.toInt());
         }
 
-        std::vector<int> sortedList;
+        vector<int> sortedList;
         switch(sortMethodComboBox->currentIndex()) {
             case 0: sortedList = Sort_Select(list); break;
             case 1: sortedList = Sort_Paste(list); break;
             case 2: sortedList = Sort_Bubble(list); break;
+            case 3: sortedList = Sort_Merge(list); break;
+            case 4: sortedList = QuickSort(list); break;
         }
 
         QString outputText;
@@ -169,13 +253,16 @@ private slots:
 
         int errorCount = 0;
         for (int i = 1; i <= iterations; i++) {
-            std::vector<int> list = generateList();
+            vector<int> list = generateList();
             
-            std::vector<int> sortedList;
+            vector<int> sortedList;
             switch(sortMethodComboBox->currentIndex()) {
                 case 0: sortedList = Sort_Select(list); break;
                 case 1: sortedList = Sort_Paste(list); break;
                 case 2: sortedList = Sort_Bubble(list); break;
+                case 3: sortedList = Sort_Merge(list); break;
+                case 4: sortedList = QuickSort(list); break;
+                
             }
 
             bool isSorted = Sorted_Test(sortedList);
@@ -203,10 +290,7 @@ private slots:
             }
         }
 
-        QString resultMessage = QString("Тестування методу '%1' завершено.\n")
-            .arg(currentSortMethod)
-            + QString("Кількість невдалих спроб: %1/%2\n")
-            .arg(errorCount).arg(iterations);
+        QString resultMessage = QString("Тестування методу '%1' завершено.\n").arg(currentSortMethod) + QString("Кількість невдалих спроб: %1/%2\n").arg(errorCount).arg(iterations);
         
         QMessageBox::information(this, "Результати тестування", resultMessage);
     }
@@ -225,7 +309,9 @@ SortingApp::SortingApp(QWidget *parent) : QWidget(parent) {
     sortMethodComboBox->addItems({
         sortMethodNames[0], 
         sortMethodNames[1], 
-        sortMethodNames[2]
+        sortMethodNames[2],
+        sortMethodNames[3],
+        sortMethodNames[4]
     });
     sortMethodLayout->addWidget(sortMethodLabel);
     sortMethodLayout->addWidget(sortMethodComboBox);
@@ -302,7 +388,7 @@ SortingApp::SortingApp(QWidget *parent) : QWidget(parent) {
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     SortingApp window;
-    window.setWindowTitle("АСД лаби 1-?");
+    window.setWindowTitle("ASD Labs");
     window.resize(500, 700);
     window.show();
     return app.exec();

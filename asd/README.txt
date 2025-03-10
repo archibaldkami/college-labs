@@ -8,3 +8,10 @@ mkdir build
 cd build
 cmake ..
 make && ./app
+
+
+Для компіляції CLI версії необхідний пакет "g++", і виконання наступних команд:
+
+git clone https://github.com/archibaldkami/college-labs.git
+cd college-labs/asd
+g++ non_gui.cpp -o non_gui && ./non_gui

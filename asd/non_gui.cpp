@@ -50,10 +50,11 @@ vector<int> Sort_Bubble(vector<int> input_list) {
 vector<int> Sort_Merge(vector<int> input_list) {
     int mid = input_list.size() / 2;
     if (input_list.size() % 2 == 1)
-    mid++;
+        mid++;
     int h = 1;
     int *c = new int[input_list.size()];
     int step;
+    
     while (h < input_list.size()) {
         step = h;
         int i = 0;
@@ -74,7 +75,7 @@ vector<int> Sort_Merge(vector<int> input_list) {
                 c[k] = input_list[i];
                 i++;
                 k++;
-                }
+            }
             while (j < (mid + step) && j < input_list.size()) {
                 c[k] = input_list[j];
                 j++;
@@ -83,7 +84,7 @@ vector<int> Sort_Merge(vector<int> input_list) {
             step = step + h;
         }
         for (i = 0; i < input_list.size(); i++)
-            input_list[i] = c[i];
+        input_list[i] = c[i];
         h = h * 2;
     }
     delete[] c;

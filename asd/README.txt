@@ -3,7 +3,7 @@
 Далі виконуємо наступні команди:
  
 git clone https://github.com/archibaldkami/college-labs.git
-cd "college-labs/asd"
+cd college-labs/asd
 mkdir build
 cd build
 cmake ..

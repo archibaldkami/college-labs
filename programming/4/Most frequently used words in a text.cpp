@@ -65,29 +65,6 @@ unordered_map<string, int> getWordFrequency(vector<string> inputText) {
     return wordFrequencyMap;
 }
 
-// vector<string> getMostFrequentWords(unordered_map<string, int> inputUM) {
-//     deque<int> intResult = {0, 0, 0};
-//     deque<string> stringResult = {"a", "b", "c"};
-//     for (auto& [word, frequency] : inputUM) {
-//         if (frequency > intResult[0]) {
-//             intResult.push_front(frequency);
-//             stringResult.push_front(word);
-
-//         } else if (frequency > intResult[1]) {
-//             intResult.insert(intResult.begin() + 1, frequency);
-//             stringResult.insert(stringResult.begin() + 1, word);
-
-//         } else if (frequency > intResult[2]) {
-//             intResult.insert(intResult.begin() + 2, frequency);
-//             stringResult.insert(stringResult.begin() + 2, word);
-//         } else continue;
-
-//         if (intResult.size() > 3) intResult.pop_back();
-//         if (stringResult.size() > 3) stringResult.pop_back();
-//     }
-//     return {stringResult[0], stringResult[1], stringResult[2]};
-// }
-
 vector<string> getMostFrequentWords(string inputText) {
 
     unordered_map<string, int> inputUM = getWordFrequency(getCleanText(inputText));
